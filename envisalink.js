@@ -42,7 +42,7 @@ EnvisaLink.prototype.connect = function () {
     for (let i = 0; i < dataslice.length; i++) {
       const datapacket = dataslice[i];
       if (datapacket !== '') {
-        const tpi = tpidefs.tpicommands[datapacket.substring(0, 3)];
+        const tpi = tpidefs[datapacket.substring(0, 3)];
         if (tpi) {
           if (tpi.bytes === '' || tpi.bytes === 0) {
             _this.emit('log-warn', tpi.pre + ' - ' + tpi.post);
