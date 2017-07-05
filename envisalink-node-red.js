@@ -1,11 +1,11 @@
 'use strict';
-var EnvisaLink = require('./envisalink.js');
+const EnvisaLink = require('./envisalink.js');
 
 module.exports = function (RED) {
   function EnvisaLinkInNode(config) {
     RED.nodes.createNode(this, config);
-    var _this = this;
-    this.controller = config.controller,
+    const _this = this;
+    this.controller = config.controller;
     this.controllerConn = RED.nodes.getNode(this.controller);
 
     if (this.controllerConn) {
@@ -18,7 +18,7 @@ module.exports = function (RED) {
     this.on('el-zoneupdate', function (update) {
       if (!update.initialUpdate) {
         delete update.initialUpdate;
-        var msg = { topic: 'zone event', payload: update };
+        const msg = {topic: 'zone event', payload: update};
         _this.send(msg);
       }
     });
@@ -26,7 +26,7 @@ module.exports = function (RED) {
     this.on('el-partitionupdate', function (update) {
       if (!update.initialUpdate) {
         delete update.initialUpdate;
-        var msg = { topic: 'partition event', payload: update };
+        const msg = {topic: 'partition event', payload: update};
         _this.send(msg);
       }
     });
@@ -34,7 +34,7 @@ module.exports = function (RED) {
     this.on('el-systemupdate', function (update) {
       if (!update.initialUpdate) {
         delete update.initialUpdate;
-        var msg = { topic: 'system event', payload: update };
+        const msg = {topic: 'system event', payload: update};
         _this.send(msg);
       }
     });
@@ -50,8 +50,8 @@ module.exports = function (RED) {
 
   function EnvisaLinkOutNode(config) {
     RED.nodes.createNode(this, config);
-    var _this = this;
-    this.controller = config.controller,
+    const _this = this;
+    this.controller = config.controller;
     this.controllerConn = RED.nodes.getNode(this.controller);
 
     if (this.controllerConn) {
@@ -76,15 +76,12 @@ module.exports = function (RED) {
   RED.nodes.registerType('envisalink out', EnvisaLinkOutNode);
 
   function EnvisaLinkControllerNode(config) {
-    this.node = RED.nodes.createNode(this, config);
-    var _this = this;
+    const _this = this;
     this.host = config.host;
     this.port = config.port;
     this.password = this.credentials.password;
     config.password = this.password;
-    config.zones = config.zones;
     config.atomicEvents = false;
-    config.partitions = config.partitions;
     this.connected = false;
     this.connecting = false;
 
@@ -117,16 +114,16 @@ module.exports = function (RED) {
     };
 
     this.el.on('connected', function () {
-      for (var id in _this.users) {
+      for (let id in _this.users) {
         if (_this.users.hasOwnProperty(id)) {
           _this.users[id].status({ fill:'green', shape:'dot', text:'Connected' });
         }
       }
     });
 
-    this.el.on('error', function (ex) {
+    this.el.on('error', function () {
       _this.log(RED._('Disconnected from ' + _this.host + ':' + _this.port));
-      for (var id in _this.users) {
+      for (let id in _this.users) {
         if (_this.users.hasOwnProperty(id)) {
           _this.users[id].status({ fill:'red', shape:'ring', text:'Disconnected' });
         }
@@ -146,7 +143,7 @@ module.exports = function (RED) {
     });
 
     this.el.on('zoneupdate', function (update) {
-      for (var id in _this.users) {
+      for (let id in _this.users) {
         if (_this.users.hasOwnProperty(id)) {
           _this.users[id].emit('el-zoneupdate', update);
         }
@@ -154,7 +151,7 @@ module.exports = function (RED) {
     });
 
     this.el.on('partitionupdate', function (update) {
-      for (var id in _this.users) {
+      for (let id in _this.users) {
         if (_this.users.hasOwnProperty(id)) {
           _this.users[id].emit('el-partitionupdate', update);
         }
@@ -162,7 +159,7 @@ module.exports = function (RED) {
     });
 
     this.el.on('systemupdate', function (update) {
-      for (var id in _this.users) {
+      for (let id in _this.users) {
         if (_this.users.hasOwnProperty(id)) {
           _this.users[id].emit('el-systemupdate', update);
         }
@@ -180,7 +177,7 @@ module.exports = function (RED) {
       }
 
       _this.log(RED._('Disconnected from ' + _this.host + ':' + _this.port));
-      for (var id in _this.users) {
+      for (let id in _this.users) {
         if (_this.users.hasOwnProperty(id)) {
           _this.users[id].status({ fill:'red', shape:'ring', text:'Disconnected' });
         }
@@ -193,7 +190,7 @@ module.exports = function (RED) {
       _this.connected = false;
       _this.connecting = false;
       _this.done = done;
-      var wasDisconnected = _this.el.disconnect();
+      const wasDisconnected = _this.el.disconnect();
       if (wasDisconnected) {
         _this.done = null;
         done();
@@ -205,4 +202,4 @@ module.exports = function (RED) {
       password: { type: 'password' }
     }
   });
-}
+};
