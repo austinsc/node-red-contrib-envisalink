@@ -1,6 +1,6 @@
 {
   "name": "node-red-contrib-envisalink",
-  "version": "0.9.1",
+  "version": "0.9.2",
   "description": "DSC alarm system support for node-red using the EnvisaLink module",
   "dependencies": {},
   "repository": {
@@ -19,13 +19,15 @@
   ],
   "node-red": {
     "nodes": {
-      "envisalink": "envisalink-node-red.js"
+      "envisalink-controller": "envisalink-controller.js",
+      "envisalink-in": "envisalink-in.js",
+      "envisalink-out": "envisalink-out.js"
     }
   },
   "bugs": {
     "url": "https://github.com/austinsc/node-red-contrib-envisalink.git#master/issues"
   },
-  "main": "envisalink-node-red.js",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

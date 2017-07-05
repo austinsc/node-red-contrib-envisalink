@@ -1,4 +1,4 @@
-module.exports.applicationcommands = {
+module.exports = {
   '000' : {
     'name':'Poll',
     'pre':'Polled',
@@ -166,10 +166,7 @@ module.exports.applicationcommands = {
     'post':'Code in Response to Request',
     'send':'500200',
     'action':'forward'
-  }
-};
-
-exports.tpicommands = {
+  },
   '500' : {
     'name':'Command Acknowledge',
     'pre':'Command',
